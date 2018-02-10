@@ -43,7 +43,7 @@ public class Main {
         //Variables
         //size of the generated matrix and declare out 2d matrix of the battlefield
         final int size =3;
-        char [][] fieldArray = new char[size][size];
+//        char [][] fieldArray = new char[size][size];
         int bomb1X, bomb1Y, bomb2X, bomb2Y;
 //        bombX = Bomb.random(size-1);
 //        bombY = Bomb.random(size-1);
@@ -51,7 +51,7 @@ public class Main {
 
 
         //populate the field array with - for the start of the game
-        fieldArray = populateArray('-', fieldArray.length);
+//        fieldArray = populateArray('-', fieldArray.length);
 
 
         //Game instruction
@@ -68,18 +68,24 @@ public class Main {
         //print the initial array
 //        print2DArray(fieldArray, fieldArray.length);
 
-        Bomb bomb =new Bomb();
-        int[] bombArray = new int[4];
-        bombArray = bomb.Bomb(size);
-        bomb1X = bombArray[0];
-        bomb1Y = bombArray[1];
-        bomb2X = bombArray[2];
-        bomb2Y = bombArray[3];
 
-        fieldArray[bomb1X][bomb1Y] = 'X';
-        fieldArray[bomb2X][bomb2Y] = 'X';
+        for (int counter=0; counter<100; counter++) {
+            char [][] fieldArray = new char[size][size];
+            fieldArray = populateArray('-', fieldArray.length);
+            Bomb bomb =new Bomb();
+            int[] bombArray = new int[4];
+            bombArray = bomb.Bomb(size);
+            bomb1X = bombArray[0];
+            bomb1Y = bombArray[1];
+            bomb2X = bombArray[2];
+            bomb2Y = bombArray[3];
 
-        print2DArray(fieldArray, fieldArray.length);
+            fieldArray[bomb1X][bomb1Y] = 'X';
+            fieldArray[bomb2X][bomb2Y] = 'X';
+
+            print2DArray(fieldArray, fieldArray.length);
+        }
+
 
 
 

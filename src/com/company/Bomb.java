@@ -21,7 +21,7 @@ public class Bomb {
     }
 
     /**
-     * Bomb constructor
+     * Bomb constructor (diagonal)
      *
      */
     public int[] Bomb (int size) {
@@ -41,6 +41,7 @@ public class Bomb {
                 } else {
                     b2x = b1x +1;
                 } //if
+                output[2] = b2x;
                 break;
             case 1:
                 if (this.inBounds(size, b1x + 1)) {
@@ -59,6 +60,7 @@ public class Bomb {
                 } else {
                     b2y = b1y +1;
                 } //if
+                output[3] = b2y;
                 break;
             case 1:
                 if (this.inBounds(size, b1y + 1)) {
