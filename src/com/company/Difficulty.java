@@ -2,10 +2,10 @@ package com.company;
 
 import java.util.Scanner;
 
-public class Battle {
+public class Difficulty {
 
     //Default constructor
-    public void Battle() {}
+    public void Difficulty() {}
 
 
     /**
