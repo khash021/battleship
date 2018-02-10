@@ -74,7 +74,7 @@ public class Main {
             fieldArray = populateArray('-', fieldArray.length);
             Bomb bomb =new Bomb();
             int[] bombArray = new int[4];
-            bombArray = bomb.Bomb(size);
+            bombArray = bomb.bomb2(size);
             bomb1X = bombArray[0];
             bomb1Y = bombArray[1];
             bomb2X = bombArray[2];
