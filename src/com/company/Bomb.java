@@ -193,7 +193,18 @@ public class Bomb {
     } //bomb2L
 
 
-    //Checks the orientation and order of the bomb pair (Horizontal/normal: 1; Horizontal/reverse: 2, etc)
+    /**
+     * This method checks the orientation, and the order of the bomb pair:
+     *
+     * @param input is the array of bomb coordinates in the format:
+     *                  input[0] = bomb1-x ; input[1] = bomb1-y
+     *                  input[2] = bomb2-x ; inpu[3] = bomb2-y
+     * @return an integer for each of the 4 cases:
+     *                  1 : Horizontal/normal
+     *                  2 : Horizontal/reverse
+     *                  3 : Vertical/normal
+     *                  4 : Vertical/reverse
+     */
     public int bombPairCondition (int[] input) {
         //Checks to see if it is horizontal
         if (input[1] == input[3]) {
@@ -214,6 +225,12 @@ public class Bomb {
     }
 
 
+    /**
+     * Method for creating a 3-grid linear bomb (Horizontal or vertical). It used the bomb2L method to create a
+     * 2-grid bomb, and adds a third bomb to it.
+     * @param size size of the matrix
+     * @return an array of it corresponding to the bomb coordinates, following the same staandard.
+     */
     public int[] bomb3L (int size) {
         //declaring and initializing variables
         int[] output = new int[6];
