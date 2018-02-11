@@ -15,6 +15,12 @@ public class Test {
     //default constructor
     Test(){}
 
+    /**
+     *      This method is the one that does all the work!
+     *      Its only output is the printed matrix(es) with the desired number of bomb
+     *      It asks the user: the size of the matrix, the number of bombs to be created, and the number of simulations.
+     *
+     */
     public static void test() {
         int size, bombSize, simSize;
         int b1x, b1y, b2x, b2y, b3x, b3y;
