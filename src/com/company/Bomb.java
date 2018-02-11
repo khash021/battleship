@@ -57,7 +57,7 @@ public class Bomb {
      *         After generating the first bomb location, it then tries to create a second bomb using randomly
      *         generated number (checking inBound before assigning them)
      */
-    public int[] bomb2d (int size) {
+    public int[] bomb2D (int size) {
         //declaring and initializing variables
         int[] output = new int[4];
         int b2x, b2y;
@@ -122,7 +122,7 @@ public class Bomb {
      *         After generating the first bomb location, it then tries to create a second bomb using randomly
      *         generated number (checking inBound before assigning them)
      */
-    public int[] bomb2 (int size) {
+    public int[] bomb2L (int size) {
         //declaring and initializing variables
         int[] output = new int[4];
         int b2x, b2y;

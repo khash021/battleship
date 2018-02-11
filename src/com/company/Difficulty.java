@@ -16,12 +16,11 @@ public class Difficulty {
      the default value (in case they choose something other their options is 5 tries (moderate difficulty)
      */
     public static int getDifficulty() {
-        System.out.println("Enter a number between 1 and 3");
+        Main.print("Enter a number between 1 and 3");
         Scanner scanner = new Scanner(System.in);
-        String difficulty = scanner.nextLine();
-        int difficultyInput = Integer.parseInt(difficulty);
+        int difficulty = scanner.nextInt();
         int numTry;
-        switch (difficultyInput) {
+        switch (difficulty) {
             case 1:
                 numTry = 3;
                 break;
@@ -34,8 +33,17 @@ public class Difficulty {
             default:
                 numTry = 5;
                 break;
-        }
+        } // switch
         return numTry;
-    }
+    } //getDifficulty
 
-}
+
+    public static int getSize() {
+        Main.print("\nPlease choose the size of the game (i.e. number of rows/columns).\nEnter a number between 2, " +
+                "and 10.");
+        Scanner scanner = new Scanner(System.in);
+        int size = scanner.nextInt();
+        return size;
+    } //getSize
+
+} //Difficulty class
