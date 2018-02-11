@@ -190,7 +190,128 @@ public class Bomb {
                 return output;
         } //switch
         return output;
-    } //bomb2
+    } //bomb2L
+
+
+    //Checks the orientation and order of the bomb pair (Horizontal/normal: 1; Horizontal/reverse: 2, etc)
+    public int bombPairCondition (int[] input) {
+        //Checks to see if it is horizontal
+        if (input[1] == input[3]) {
+            //checks to see if normal order
+            if (input[2] > input[0]) {
+                return 1;
+            } else {
+                return 2;
+            }
+        } else {
+            //Vertical
+            if (input[3] > input[1]) {
+                return 3;
+            } else {
+                return 4;
+            }
+        }
+    }
+
+
+    public int[] bomb3L (int size) {
+        //declaring and initializing variables
+        int[] output = new int[6];
+        int b1x, b1y, b2x, b2y, b3x, b3y, condition;
+        Bomb bomb = new Bomb();
+        int[] input = bomb.bomb2L(3);
+        b1x = input[0];
+        b1y = input[1];
+        b2x = input[2];
+        b2y = input[3];
+        for (int i=0; i<4; i++) {
+            output[i] = input[i];
+        }
+
+        condition = this.bombPairCondition(input);
+
+        //switch for the 4 different configuration obtained from bombPairCondition() method
+        switch (condition) {
+            //Horizontal/normal order
+            case 1:
+                output[5] = b1y;
+                if (this.random(1) == 1) {
+                    if (this.inBounds(size, b2x + 1)) {
+                        b3x = b2x + 1;
+                    } else {
+                        b3x = b1x - 1;
+                    }
+                } else {
+                    if (this.inBounds(size, b1x - 1)) {
+                        b3x = b1x - 1;
+                    } else {
+                        b3x = b2x + 1;
+                    }
+                }
+                output [4] = b3x;
+                break;
+
+            //Horizontal/reverse
+            case 2:
+                output[5] = b1y;
+                if (this.random(1) == 1) {
+                    if (this.inBounds(size, b1x + 1)) {
+                        b3x = b1x + 1;
+                    } else {
+                        b3x = b2x - 1;
+                    }
+                } else {
+                    if (this.inBounds(size, b2x - 1)) {
+                        b3x = b2x - 1;
+                    } else {
+                        b3x = b1x + 1;
+                    }
+                }
+                output[4] = b3x;
+                break;
+
+            //Vertical/normal
+            case 3:
+                output[4] = b1x;
+                if (this.random(1) == 1) {
+                    if (this.inBounds(size, b2y + 1)) {
+                        b3y = b2y + 1;
+                    } else {
+                        b3y = b1y - 1;
+                    }
+                } else {
+                    if (this.inBounds(size, b1y - 1)) {
+                        b3y = b1y - 1;
+                    } else {
+                        b3y = b2y +1;
+                    }
+                }
+                output[5] = b3y;
+                break;
+
+            //Vertical/reverse
+            case 4:
+                output[4] = b1x;
+                if (this.random(1) == 1) {
+                    if (this.inBounds(size, b1y + 1)) {
+                        b3y = b1y + 1;
+                    } else {
+                        b3y = b2y - 1;
+                    }
+                } else {
+                    if (this.inBounds(size, b2y - 1)) {
+                        b3y = b2y - 1;
+                    } else {
+                        b3y = b1y + 1;
+                    }
+                }
+                output[5] = b3y;
+                break;
+        } //switch
+        return output;
+    } // bomb3L
+
+
 
 
 } //main
