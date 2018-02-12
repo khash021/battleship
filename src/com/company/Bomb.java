@@ -8,8 +8,13 @@ package com.company;
 
 public class Bomb {
 
+    int x, y;
+
     //default constructor
-    Bomb(){}
+    Bomb(){
+        x=0;
+        y=0;
+    }
 
     //Generates a random number between 0 and i (input)
     public static int random (int i) {
