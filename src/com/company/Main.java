@@ -59,7 +59,7 @@ public class Main {
             case "p":
                 replay = 'y';
                 while (replay == 'y') {
-                print("Coming soon! Check back soon");
+                Play.play();
                 print("\nWould you like to play again? Y/N");
                 replay = (scanner.nextLine()).toLowerCase().charAt(0);
                 } //while
