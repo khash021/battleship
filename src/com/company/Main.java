@@ -20,7 +20,7 @@ public class Main {
         }
     }
     //Print function for 2D-arrays.
-    private static void print2DArray (char[][] array, int size) {
+    public static void print2DArray (char[][] array, int size) {
         System.out.println("");
         for (int i=0; i<size; i++) {
             for (int j=0; j<size; j++){
@@ -30,11 +30,11 @@ public class Main {
         }
     }
 
-    //Function for populating a symmetrical 2D array (size as an argmt) using the input char, and number of
-    private static char[][] populateArray (char c, int number){
-        char[][] array = new char[number][number];
-        for (int i=0;i<number; i++ ) {
-            for (int j=0; j<number; j++) {
+    //Function for populating a symmetrical 2D array (size as an args) using the input char, and number of
+    public static char[][] populateArray (char c, int size){
+        char[][] array = new char[size][size];
+        for (int i=0;i<size; i++ ) {
+            for (int j=0; j<size; j++) {
                 array[i][j] = c;
             }
         }
@@ -45,188 +45,40 @@ public class Main {
 
     public static void main(String[] args) {
 
+        String option;
+        char replay;
+        Scanner scanner = new Scanner(System.in);
 
-//        //Variables
-//        int bomb1X, bomb1Y, bomb2X, bomb2Y;
-//        Bomb bomb = new Bomb();
-//
-//        //Get the size of the matrix from the user; then declare and initialize the field array
-//        final int size = Difficulty.getSize();
-//        char [][] fieldArray = new char[size][size];
-//
-//        //populate the field array with - for the start of the game
-//        fieldArray = populateArray('-', fieldArray.length);
-//
-//        //Game instruction
-//        print("\nThe game is a Battleship simulator with " + size + " rows and columns.\nTry to guess the bomb location" +
-//                " in as little tries as possible to win.\nEnter the location by giving the x-coordinate, followed by" +
-//                " the y-coordante, separated by \" , \"");
-//        print("Please choose the difficulty of the game." +
-//                "\n1 ---------> hard (3 tries)\n2 ---------> moderate (5 tries)" +
-//                "\n3 ---------> easy (7 tries)");
+        print("\nWelcome to Battleship. Tell me what would you like to do? Your options are:" +
+        "\n   ---> Play\n   ---> God mode");
+        option = scanner.nextLine().toLowerCase();
 
-        //Difficulty
-//        final int numTry= Difficulty.getDifficulty();
+        //The main heart of the game. this decides base on user input what to do and what to call
+        switch (option) {
+            case "play":
+            case "p":
+                replay = 'y';
+                while (replay == 'y') {
+                print("Coming soon! Check back soon");
+                print("\nWould you like to play again? Y/N");
+                replay = (scanner.nextLine()).toLowerCase().charAt(0);
+                } //while
+                break;
+            case "god":
+                replay = 'y';
+                while (replay == 'y') {
+                    Test.test();
+                    print("\nWould you like to run the simulation again? Y/S");
+                    replay = (scanner.nextLine()).toLowerCase().charAt(0);
+                } //while
+                break;
 
-        //print the initial array
-//        print2DArray(fieldArray, fieldArray.length);
+        } //switch
 
-        //One bomb location
-//        int[] bombArray = new int[2];
-//        bombArray = bomb.bomb1(size);
-//        bomb1X = bombArray[0];
-//        bomb1Y = bombArray[1];
-
-        //two bomb locations
-//        int[] bombArray = new int[4];
-//        bombArray = bomb.bomb2L(size);
-//        bomb1X = bombArray[0];
-//        bomb1Y = bombArray[1];
-//        bomb2X = bombArray[2];
-//        bomb2Y = bombArray[3];
-//
-//        print("b1-x: " + bomb1X);
-//        print("b1-y: " + bomb1Y);
-//        print("b2-x: " + bomb2X);
-//        print("b1-y: " + bomb2Y);
-
-
-        // creating 100 grids
-        int size = 4;
-        int bomb1X, bomb1Y, bomb2X, bomb2Y, bomb3X, bomb3Y;
-        for (int counter=0; counter<100; counter++) {
-            char [][] fieldArray = new char[size][size];
-            fieldArray = populateArray('-', fieldArray.length);
-            Bomb bomb =new Bomb();
-            int[] bombArray = new int[6];
-            bombArray = bomb.bomb3L(size);
-            bomb1X = bombArray[0];
-            bomb1Y = bombArray[1];
-            bomb2X = bombArray[2];
-            bomb2Y = bombArray[3];
-            bomb3X = bombArray[4];
-            bomb3Y = bombArray[5];
-
-            fieldArray[bomb1X][bomb1Y] = 'X';
-            fieldArray[bomb2X][bomb2Y] = 'X';
-            fieldArray[bomb3X][bomb3Y] = 'X';
-
-            print2DArray(fieldArray, fieldArray.length);
-        }
-
-
-        //games play
-//        int i;
-//        for (i=numTry; i>0; i--) {
-//            print("\nYou have " + i + " tries left.");
-//            print("Please enter the coordinates in the form \"x,y\"");
-//            //gets the user input in conventional x,y coordinate
-//            Scanner scanner = new Scanner(System.in);
-//            String input = scanner.nextLine();
-//            String coordinates[] = input.split("[.,/ ]");
-//            /* These two lines, convert conventional x,y coordinates (starting from 0) into array index
-//                Subtraction of 1 is to convert the 1-base input coordinate to 0-base index
-//             */
-//            int coori = Math.abs(((Integer.parseInt(coordinates[1])) - 1) -(size-1)) ;
-//            int coorj = (Integer.parseInt(coordinates[0])) - 1;
-//
-//            //if statement to check whether bomb-1 has been found (i.e. bombX1 = -1)
-//            if (bomb1X != -1) {    //if bomb-1 checker
-//                //checks to see if the user has hit bomb1
-//                if (coori == bomb1X && coorj == bomb1Y) {   //if bomb-1
-//                    fieldArray[bomb1X][bomb1Y] = 'O';
-//                    bomb1X = -1; //this means bomb 1 has already been defused
-//                    print("That was a hit!");
-//                    // this skips the rest, and goes back to the for since we can only hit one bomb at a time
-////                    if (bomb1X == -1)
-////                        continue;
-//                    //else statement for when the user did not git the bomb. It indicates the location of splash with X
-//                } else {  //else bomb-1
-//                    fieldArray [coori][coorj] = 'X';
-//                    print("SPLASH! You hit water. X marks the spot");
-//                } // else bomb-1
-//            } else if (bomb2X != -1) {  //if bomb2-checker
-//                if (coori == bomb2X && coorj == bomb2Y) {  //if bomb-2
-//                    fieldArray[bomb2X][bomb2Y] = 'O';
-//                    bomb2X = -1;
-//                    print("That was a hit!");
-//                } else {  //else bomb-2
-//                    fieldArray [coori][coorj] = 'X';
-//                    print("SPLASH! You hit water. X marks the spot");
-//                }
-//            }  //if bomb-2 checker
-//            print2DArray(fieldArray,fieldArray.length);
-//            if (bomb1X == -1 && bomb2X == -1) {  //if both -1
-//                print("You won!");
-//                break;
-//            } //if both -1
-////            print("You lost :( \nTry again later.");
-//        } //for
-//
-//        //message if they have won
-//        if (bomb1X == -1 && bomb2X == -1) {
-//            print("Congratulations! you have discovered all the bombs");
-//        } else if (i == 0) {
-//            print("\nYou loose :(");
-//        }
-
-
-
-//        print("\nYou won in " + ((numTry - i)+1) + " moves.\nGood job!");
-
-
+        print("Thank you, come again :)");
     } //main method
 } // main class
 
-/*
-  ----------------------------<<<<<  END  >>>>-------------------------------------------
- */
-
-// creating 100 grids
-//        for (int counter=0; counter<100; counter++) {
-//            char [][] fieldArray = new char[size][size];
-//            fieldArray = populateArray('-', fieldArray.length);
-//            Bomb bomb =new Bomb();
-//            int[] bombArray = new int[4];
-//            bombArray = bomb.bomb2(size);
-//            bomb1X = bombArray[0];
-//            bomb1Y = bombArray[1];
-//            bomb2X = bombArray[2];
-//            bomb2Y = bombArray[3];
-//
-//            fieldArray[bomb1X][bomb1Y] = 'X';
-//            fieldArray[bomb2X][bomb2Y] = 'X';
-//
-//            print2DArray(fieldArray, fieldArray.length);
-//        }
 
 
-//1 bomb games play
-//        for (int i=numTry; i>0; i--) {
-//                print("\nYou have " + i + " tries left.");
-//                print("Please enter the coordinates in the form \"x,y\" with no spaces");
-//                //gets the user input in conventional x,y coordinate
-//                Scanner scanner = new Scanner(System.in);
-//                String input = scanner.nextLine();
-//                String coordinates[] = input.split("[.,/ ]");
-//            /* These two lines, convert conventional x,y coordinates (starting from 0) into array index
-//                Subtraction of 1 is to convert the 1-base input coordinate to 0-base index
-//             */
-//                int coori = Math.abs(((Integer.parseInt(coordinates[1])) - 1) -(size-1)) ;
-//                int coorj = (Integer.parseInt(coordinates[0])) - 1;
-//                //if statement to see if the user hit bomb
-//                if (coori == bomb1X && coorj == bomb1Y) {
-//                fieldArray[bomb1X][bomb1Y] = 'O';
-//                print("That was a hit!");
-//                print2DArray(fieldArray,fieldArray.length);
-//                print("\nYou won in " + ((numTry - i)+1) + " moves.\nGood job!");
-//                return;
-//                //else statement for when the user did not git the bomb. It indicates the location of splash with X
-//                } else {
-//                fieldArray [coori][coorj] = 'X';
-//                print("SPLASH! You hit water. X marks the spot");
-//                }
-//                print2DArray(fieldArray,fieldArray.length);
-//
-//                }
-//                print("You lost :( \nTry again later.");
+
