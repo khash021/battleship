@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Play {
 
     //variables
-    private static int i, coori, coorj, b1x, b1y, b2x, b2y, b3x, b3y;
+    private static int i, x, y, coori, coorj, b1x, b1y, b2x, b2y, b3x, b3y;
     private static Scanner scanner = new Scanner(System.in);
     private static char[][] fieldArray;
     private static ArrayList<Bomb> bombArray = new ArrayList<>();
@@ -76,7 +76,6 @@ public class Play {
         fieldArray = new char[size][size];
         //get the bomb coordinates from bomb1 method of Bomb class
         bombArray = bomb.bomb2L(size);
-        bomb = bombArray.get(0);
         b1x = bombArray.get(0).x;
         b1y = bombArray.get(0).y;
         //create our initial matrix
@@ -122,19 +121,18 @@ public class Play {
 
         //variables
         Bomb bomb = new Bomb();
-        int i, coori, coorj, b1x, b1y, b2x, b2y;
         char[][] fieldArray = new char[size][size];
-        //get the bomb coordinates from bomb1 method of Bomb class
-        int[] bombArray = bomb.bomb2L(size);
-        b1x = bombArray[0];
-        b1y = bombArray[1];
-        b2x = bombArray[2];
-        b2y = bombArray[3];
+        //get the bombArray containing the 2 bomb objects
+        bombArray =  bomb.bomb2L(size);
+//        b1x = bombArray[0];
+//        b1y = bombArray[1];
+//        b2x = bombArray[2];
+//        b2y = bombArray[3];
         //create our initial matrix
         fieldArray = Main.populateArray('-', fieldArray.length);
         Main.print2DArray(fieldArray, fieldArray.length);
 
-        for (i = numTry; i > 0; i--) {
+        for (i = numTry; i > 0; i--) {  //for numTry
 
             Main.print("\nYou have " + i + " tries left.");
             Main.print("Please enter the coordinates in the form \"x,y\" with no spaces");
@@ -147,44 +145,39 @@ public class Play {
             coori = Math.abs(((Integer.parseInt(coordinates[1])) - 1) - (size - 1));
             coorj = (Integer.parseInt(coordinates[0])) - 1;
 
-            //if statement to check whether bomb-1 has been found (i.e. bombX1 = -1)
-            if (b1x != -1) {    //if bomb-1 checker
-                //checks to see if the user has hit bomb1
-                if (coori == b1x && coorj == b1y) {   //if bomb-1
-                    fieldArray[b1x][b1y] = 'O';
-                    b1x = -1; //this means bomb 1 has already been defused
+            //This loop runs for each bomb present in the bombArray, then removing it from the array, if it is defused
+            for (int j=0; j < bombArray.size(); j++) {
+                if (coori == bombArray.get(j).x && coorj == bombArray.get(j).y ) {
+                    fieldArray[coori][coorj] = 'O';
                     Main.print("That was a hit!");
-                    //else statement for when the user did not git the bomb. It indicates the location of splash with X
-                } else {  //else bomb-1
+                    bombArray.remove(j);
+                    break;
+                } // if bomb-checker
+                //checks to see if this is the end of the loop (meaning input didn't match any bomb)
+                if (j == bombArray.size()-1) {
                     fieldArray[coori][coorj] = 'X';
                     Main.print("SPLASH! You hit water. X marks the spot");
-                } // else bomb-1
-            } else if (b2x != -1) {  //if bomb2-checker
-                if (coori == b2x && coorj == b2y) {  //if bomb-2
-                    fieldArray[b2x][b2y] = 'O';
-                    b2x = -1;
-                    Main.print("That was a hit!");
-                } else {  //else bomb-2
-                    fieldArray[coori][coorj] = 'X';
-                    Main.print("SPLASH! You hit water. X marks the spot");
-                }
-            }  //if bomb-2 checker
-            Main.print2DArray(fieldArray, fieldArray.length);
-            if (b1x == -1 && b2x == -1) {  //if all defused
+                } //if no bomb was defused
+            } //for bombArray has item
+
+            //checks to see if there are any bombs left in the array, if there is none, it terminates the main for loop
+            if (bombArray.size() == 0) {
                 Main.print("You won!");
                 break;
-            } //if all defused
-        } //for
+            }
 
-        //message if they have won
-        if (b1x == -1 && b2x == -1) {
+            // Print the updated matrix
+            Main.print2DArray(fieldArray, fieldArray.length);
+
+        } // for(numTry)
+
+        //End message if they have ran through the whole loop
+        if (bombArray.size() == 0) {
             Main.print("Congratulations! you have discovered all the bombs in " + ((numTry - i) + 1) + " moves."
             + "\nGood job!");
         } else if (i == 0) {
             Main.print("\nYou loose :(");
         } //else-end
-
-
 
     } //play2
 //
