@@ -76,7 +76,8 @@ public class Main {
 
         } //switch
 
-        print("Thank you, come again :)");
+//        print("Thank you, come again :)");
+        print("Fine........ Go do your boring human shit!");
 
 
     } //main method
