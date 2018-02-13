@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -22,10 +23,15 @@ public class Test {
      *
      */
     public static void test() {
+
+        //variables
         int size, bombSize, simSize;
         int b1x, b1y, b2x, b2y, b3x, b3y;
-        int[] bombArray;
+        ArrayList<Bomb> bombArray = new ArrayList<>();
+        Bomb bomb = new Bomb();
         Scanner scanner = new Scanner(System.in);
+
+
         Main.print("Please enter the size of the matrix (i.e. number of rows)");
         size = scanner.nextInt();
         while (size<2 || size>10) {
@@ -48,34 +54,35 @@ public class Test {
             simSize = scanner.nextInt();
         }
 
-        //Declare the output array and bomb object
+        //Declare the output array
         char[][] outputArray = new char[size][size];
-        Bomb bomb = new Bomb();
+
 
         //switch case for for calling different methods depending on the bombSize type
         switch (bombSize) {
             case 1:
-                //variables
-                bombArray = new int[bombSize*2];
                 //Create the loop based on the input (number of randomly generated matrix(es) )
                 for (int i =0; i<simSize; i++) {
-                    //Create the bomb by calling bomb1 method and storing it in the bombArray. Then getting the coordinates
+                    //create a new bomb object
+                    bomb = new Bomb();
+                    //get the bomb as an object in the arrayList
                     bombArray = bomb.bomb1(size);
-                    b1x = bombArray[0];
-                    b1y = bombArray[1];
+                    //get the x,y of the bomb
+                    b1x = bombArray.get(0).x;
+                    b1y = bombArray.get(0).y;
                     outputArray = Main.populateArray('-', outputArray.length);
                     outputArray[b1x][b1y] = 'X';
                     Main.print2DArray(outputArray, outputArray.length);
                 } //for
                 break;
             case 2:
-                bombArray = new int[bombSize*2];
                 for (int i=0; i<simSize; i++) {
+                    bomb = new Bomb();
                     bombArray = bomb.bomb2L(size);
-                    b1x = bombArray[0];
-                    b1y = bombArray[1];
-                    b2x = bombArray[2];
-                    b2y = bombArray[3];
+                    b1x = bombArray.get(0).x;
+                    b1y = bombArray.get(0).y;
+                    b2x = bombArray.get(1).x;
+                    b2y = bombArray.get(1).y;
                     outputArray = Main.populateArray('-', outputArray.length);
                     outputArray[b1x][b1y] = 'X';
                     outputArray[b2x][b2y] = 'X';
@@ -83,15 +90,15 @@ public class Test {
                 } //for
                 break;
             case 3:
-                bombArray = new int[bombSize*2];
                 for (int i=0; i<simSize; i++) {
+                    bomb = new Bomb();
                     bombArray = bomb.bomb3L(size);
-                    b1x = bombArray[0];
-                    b1y = bombArray[1];
-                    b2x = bombArray[2];
-                    b2y = bombArray[3];
-                    b3x = bombArray[4];
-                    b3y = bombArray[5];
+                    b1x = bombArray.get(0).x;
+                    b1y = bombArray.get(0).y;
+                    b2x = bombArray.get(1).x;
+                    b2y = bombArray.get(1).y;
+                    b3x = bombArray.get(2).x;
+                    b3y = bombArray.get(2).y;
                     outputArray = Main.populateArray('-', outputArray.length);
                     outputArray[b1x][b1y] = 'X';
                     outputArray[b2x][b2y] = 'X';

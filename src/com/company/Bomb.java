@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 /**
  *  This class is responsible for randomly selecting bomb(s) coordinates.
  *
@@ -9,6 +11,8 @@ package com.company;
 public class Bomb {
 
     int x, y;
+    private ArrayList<Bomb> outputArray = new ArrayList<>();
+    private int b1x, b1y, b2x, b2y, b3x, b3y;
 
     //default constructor
     Bomb(){
@@ -44,14 +48,22 @@ public class Bomb {
      * @return output[] :an integer array of the bomb coordinate with the format [i][j]
      *                   (index 0 being row, index 1 being column)
      */
-    public int[] bomb1(int size) {
-        int[] output = new int[2];
-        int b1x = random(size - 1);
-        output[0] = b1x;
-        int b1y = random(size - 1);
-        output[1] = b1y;
-        return output;
-    }
+//    public int[] bomb1(int size) {
+//        int[] output = new int[2];
+//        int b1x = random(size - 1);
+//        output[0] = b1x;
+//        int b1y = random(size - 1);
+//        output[1] = b1y;
+//        return output;
+//    }
+
+    public ArrayList<Bomb> bomb1(int size){
+        Bomb bomb = new Bomb();
+        bomb.x = Bomb.random(size - 1);
+        bomb.y = Bomb.random(size - 1);
+        outputArray.add(bomb);
+        return outputArray;
+    } //bomb1
 
     /**
      * Method for creating a 2-grid diagonal bomb. (the two bomb locations are next to each other)
@@ -127,17 +139,18 @@ public class Bomb {
      *         After generating the first bomb location, it then tries to create a second bomb using randomly
      *         generated number (checking inBound before assigning them)
      */
-    public int[] bomb2L (int size) {
+    public ArrayList<Bomb> bomb2L (int size) {
         //declaring and initializing variables
-        int[] output = new int[4];
-        int b2x, b2y;
+        Bomb bomb = new Bomb();
 
         //creating the 1st bomb
-        int b1x = random(size - 1);
-        output[0] = b1x;
-        int b1y = random(size - 1);
-        output[1] = b1y;
-
+        bomb.x = Bomb.random(size - 1);
+        bomb.y = Bomb.random(size - 1);
+        b1x = bomb.x;
+        b1y = bomb.y;
+        outputArray.add(bomb);
+        //create the next bomb
+        bomb = new Bomb();
         //random numbers (either 1 or 0) used for generating the 2nd bomb
         int random1 = random(1);
         int random2 = random(1);
@@ -149,7 +162,7 @@ public class Bomb {
             //vertical (b2x stays the same, calculate b2y)
             case 0:
                 b2x = b1x;
-                output[2] = b2x;
+                bomb.x = b2x;
                 switch (random1) {
                     case 0:
                         if (this.inBounds(size, b1y - 1 )) {
@@ -157,7 +170,7 @@ public class Bomb {
                         } else {
                             b2y = b1y + 1;
                         } //if
-                        output[3] = b2y;
+                        bomb.y = b2y;
                         break;
                     case 1:
                         if (this.inBounds(size, b1y + 1)) {
@@ -165,15 +178,16 @@ public class Bomb {
                         } else {
                             b2y = b1y -1;
                         } //if
-                        output[3] = b2y;
+                        bomb.y = b2y;
                         break;
                 } //switch random1
-                return output;
+                outputArray.add(bomb);
+                return outputArray;
 
             //horizontal (b2y stays the same, calculate b2x)
             case 1:
                 b2y = b1y;
-                output[3] = b2y;
+                bomb.y = b2y;
                 switch (random2) {
                     case 0:
                         if (this.inBounds(size, b1x - 1)) {
@@ -181,7 +195,7 @@ public class Bomb {
                         } else {
                             b2x = b1x + 1;
                         } //if
-                        output[2] = b2x;
+                        bomb.x = b2x;
                         break;
                     case 1:
                         if (this.inBounds(size, b1x + 1)) {
@@ -189,12 +203,13 @@ public class Bomb {
                         } else {
                             b2x = b1x - 1;
                         } //if
-                        output[2] = b2x;
+                        bomb.x = b2x;
                         break;
                 } //switch random2
-                return output;
+                outputArray.add(bomb);
+                return outputArray;
         } //switch
-        return output;
+        return outputArray;
     } //bomb2L
 
 
@@ -210,18 +225,18 @@ public class Bomb {
      *                  3 : Vertical/normal
      *                  4 : Vertical/reverse
      */
-    public int bombPairCondition (int[] input) {
+    public int bombPairCondition (ArrayList<Bomb> input) {
         //Checks to see if it is horizontal
-        if (input[1] == input[3]) {
+        if (input.get(0).y == input.get(1).y) {
             //checks to see if normal order
-            if (input[2] > input[0]) {
+            if (input.get(1).x > input.get(0).x) {
                 return 1;
             } else {
                 return 2;
             }
         } else {
             //Vertical
-            if (input[3] > input[1]) {
+            if (input.get(1).y > input.get(0).y) {
                 return 3;
             } else {
                 return 4;
@@ -236,27 +251,29 @@ public class Bomb {
      * @param size size of the matrix
      * @return an array of it corresponding to the bomb coordinates, following the same staandard.
      */
-    public int[] bomb3L (int size) {
+    public ArrayList<Bomb> bomb3L (int size) {
         //declaring and initializing variables
-        int[] output = new int[6];
-        int b1x, b1y, b2x, b2y, b3x, b3y, condition;
         Bomb bomb = new Bomb();
-        int[] input = bomb.bomb2L(3);
-        b1x = input[0];
-        b1y = input[1];
-        b2x = input[2];
-        b2y = input[3];
-        for (int i=0; i<4; i++) {
-            output[i] = input[i];
+        int condition;
+        ArrayList<Bomb> inputArray = bomb.bomb2L(3);
+        b1x = inputArray.get(0).x;
+        b1y = inputArray.get(0).y;
+        b2x = inputArray.get(1).x;
+        b2y = inputArray.get(1).y;
+        for (int i=0; i<2; i++) {
+            outputArray.add(inputArray.get(i));
         }
 
-        condition = this.bombPairCondition(input);
+        //create the third bomb
+        bomb = new Bomb();
+
+        condition = this.bombPairCondition(inputArray);
 
         //switch for the 4 different configuration obtained from bombPairCondition() method
         switch (condition) {
             //Horizontal/normal order
             case 1:
-                output[5] = b1y;
+                bomb.y = b1y;
                 if (this.random(1) == 1) {
                     if (this.inBounds(size, b2x + 1)) {
                         b3x = b2x + 1;
@@ -270,12 +287,13 @@ public class Bomb {
                         b3x = b2x + 1;
                     }
                 }
-                output [4] = b3x;
+                bomb.x = b3x;
+                outputArray.add(bomb);
                 break;
 
             //Horizontal/reverse
             case 2:
-                output[5] = b1y;
+                bomb.y = b1y;
                 if (this.random(1) == 1) {
                     if (this.inBounds(size, b1x + 1)) {
                         b3x = b1x + 1;
@@ -289,12 +307,13 @@ public class Bomb {
                         b3x = b1x + 1;
                     }
                 }
-                output[4] = b3x;
+                bomb.x = b3x;
+                outputArray.add(bomb);
                 break;
 
             //Vertical/normal
             case 3:
-                output[4] = b1x;
+                bomb.x = b1x;
                 if (this.random(1) == 1) {
                     if (this.inBounds(size, b2y + 1)) {
                         b3y = b2y + 1;
@@ -308,12 +327,13 @@ public class Bomb {
                         b3y = b2y +1;
                     }
                 }
-                output[5] = b3y;
+                bomb.y = b3y;
+                outputArray.add(bomb);
                 break;
 
             //Vertical/reverse
             case 4:
-                output[4] = b1x;
+                bomb.x = b1x;
                 if (this.random(1) == 1) {
                     if (this.inBounds(size, b1y + 1)) {
                         b3y = b1y + 1;
@@ -327,10 +347,11 @@ public class Bomb {
                         b3y = b1y + 1;
                     }
                 }
-                output[5] = b3y;
+                bomb.y = b3y;
+                outputArray.add(bomb);
                 break;
         } //switch
-        return output;
+        return outputArray;
     } // bomb3L
 
 

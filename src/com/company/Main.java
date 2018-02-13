@@ -45,59 +45,38 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        String option;
-//        char replay;
+        String option;
+        char replay;
         Scanner scanner = new Scanner(System.in);
-//
-//        print("\nWelcome to Battleship. Tell me what would you like to do? Your options are:" +
-//        "\n   ---> Play\n   ---> God mode\n      ------> ArrayList");
-//        option = scanner.nextLine().toLowerCase();
-//
-//        //The main heart of the game. this decides base on user input what to do and what to call
-//        switch (option) {
-//            case "play":
-//            case "p":
-//                replay = 'y';
-//                while (replay == 'y') {
-//                Play.play();
-//                print("\nWould you like to play again? Y/N");
-//                replay = (scanner.nextLine()).toLowerCase().charAt(0);
-//                } //while
-//                break;
-//            case "god":
-//                replay = 'y';
-//                while (replay == 'y') {
-//                    Test.test();
-//                    print("\nWould you like to run the simulation again? Y/S");
-//                    replay = (scanner.nextLine()).toLowerCase().charAt(0);
-//                } //while
-//                break;
-//
-//        } //switch
-//
-//        print("Thank you, come again :)");
 
+        print("\nWelcome to Battleship. Tell me what would you like to do? Your options are:" +
+        "\n   ---> Play\n   ---> God mode");
+        option = scanner.nextLine().toLowerCase();
 
-        String replay = "y";
-        while (replay.equals("y")) {
-            Bomb bomb = new Bomb();
-            print("Choose the size of the matrix");
-            int size = scanner.nextInt();
-            print("Number simulation");
-            int simSize = scanner.nextInt();
-            for (int i=0; i<simSize; i++) {
-                bomb = BombCreator.create1(size).get(0);
-                char[][] outputMatrix = new char[size][size];
-                outputMatrix = populateArray('-', size);
-                int x = bomb.x;
-                int y = bomb.y;
-                outputMatrix[x][y] = 'X';
-                print2DArray(outputMatrix, size);
+        //The main heart of the game. this decides base on user input what to do and what to call
+        switch (option) {
+            case "play":
+            case "p":
+                replay = 'y';
+                while (replay == 'y') {
+                Play.play();
+                print("\nWould you like to play again? Y/N");
+                replay = (scanner.nextLine()).toLowerCase().charAt(0);
+                } //while
+                break;
+            case "god":
+            case "g":
+                replay = 'y';
+                while (replay == 'y') {
+                    Test.test();
+                    print("\nWould you like to run the simulation again? Y/S");
+                    replay = (scanner.nextLine()).toLowerCase().charAt(0);
+                } //while
+                break;
 
-            } //for
-            print("\nWould you like to run the simulation again? Y/S");
-            replay = scanner.nextLine();
-        } //while
+        } //switch
+
+        print("Thank you, come again :)");
 
 
     } //main method
